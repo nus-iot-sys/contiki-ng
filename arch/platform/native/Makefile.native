@@ -5,8 +5,7 @@ endif
 
 CONTIKI_TARGET_DIRS = . dev
 CONTIKI_TARGET_MAIN = ${addprefix $(OBJECTDIR)/,contiki-main.o}
-CONTIKI_TARGET_SOURCEFILES += platform.c clock.c xmem.c buttons.c
-
+CONTIKI_TARGET_SOURCEFILES += platform.c clock.c xmem.c buttons.c socket-radio.c
 # The different options
 MAKE_CFS_POSIX = 1
 MAKE_CFS_COFFEE = 2
