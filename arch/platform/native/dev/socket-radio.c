@@ -1,7 +1,6 @@
 #include "contiki.h"
 
 #include <stdint.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <sys/socket.h>
@@ -23,6 +22,12 @@
 #define SOCKET_RADIO_BUFSIZE SOCKET_RADIO_CONF_BUFSIZE
 #else
 #define SOCKET_RADIO_BUFSIZE 100
+#endif
+
+#ifdef SOCKET_RADIO_CONF_PORT
+#define SOCKET_RADIO_PORT SOCKET_RADIO_CONF_PORT
+#else
+#define SOCKET_RADIO_PORT 6000U
 #endif
 
 void *pending_data;
@@ -135,33 +140,23 @@ on(void)
     struct sockaddr_in radio_addr;
     int r;
 
-    char *radio_port_str = getenv("CONTIKING_SOCKET_RADIO_PORT");
-    short radio_port;
-
-    if (radio_port_str == NULL || 
-        (radio_port = atoi(radio_port_str)) <= 0) {
-        LOG_ERR("CONTIKING_SOCKET_RADIO_PORT not set correclty\n");
-        return 0;
-    }
-
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0) {
         LOG_ERR("socket()\n");
         return 0;
     }
 
-    // memset(&radio_addr, 0, sizeof(radio_addr));
+    memset(&radio_addr, 0, sizeof(radio_addr));
     radio_addr.sin_family = AF_INET;
-    radio_addr.sin_port = htons(6000);
+    radio_addr.sin_port = htons(SOCKET_RADIO_PORT);
     inet_pton(AF_INET, "127.0.0.1", &radio_addr.sin_addr);
 
     if ((r = connect(sockfd, (struct sockaddr *)&radio_addr, sizeof radio_addr)) < 0) {
-        LOG_ERR("connect()\n");
+        LOG_ERR("Failed to connect to port %u\n", SOCKET_RADIO_PORT);
         return 0;
     }
 
-
-    LOG_INFO("Using port %d as socket radio source\n", radio_port);
+    LOG_INFO("Using port %d as socket radio source\n", SOCKET_RADIO_PORT);
     
     select_set_callback(sockfd, &socket_radio_sock_callback);
     return 1;
