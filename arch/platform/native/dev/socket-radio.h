@@ -8,10 +8,7 @@
 
 extern const struct radio_driver socket_radio_driver;
 
-extern uint8_t *socket_radio_buf;
-extern uint16_t socket_radio_bufsz;
-
-typedef void (* socket_radio_input_callback)(const void *data, uint16_t len);
+typedef void (* socket_radio_input_callback)(const void *data, size_t len);
 
 void socket_radio_set_input_callback(socket_radio_input_callback callback);
 

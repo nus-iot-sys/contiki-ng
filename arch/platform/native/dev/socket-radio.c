@@ -1,5 +1,6 @@
 #include "contiki.h"
 
+#include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
@@ -18,18 +19,22 @@
 #define LOG_MODULE "Radio"
 #define LOG_LEVEL LOG_LEVEL_INFO
 
-uint8_t *socket_radio_buf;
-uint16_t socket_radio_bufsz;
+#ifdef SOCKET_RADIO_CONF_BUFSIZE
+#define SOCKET_RADIO_BUFSIZE SOCKET_RADIO_CONF_BUFSIZE
+#else
+#define SOCKET_RADIO_BUFSIZE 100
+#endif
+
+void *pending_data;
+uint8_t in_databuf[SOCKET_RADIO_BUFSIZE + 1];
 static socket_radio_input_callback current_callback = NULL;
 
 static int sockfd = -1;
-static uint16_t buf_payload_len;
 
 static int
 init(void)
 {
-  socket_radio_buf = NULL;
-  socket_radio_bufsz = 0;
+  pending_data = NULL;
   current_callback = NULL;
   return 0;
 }
@@ -37,26 +42,25 @@ init(void)
 static int
 prepare(const void *payload, unsigned short payload_len)
 {
-  if(payload_len > socket_radio_bufsz) {
+  
+  if(payload_len > SOCKET_RADIO_BUFSIZE) {
     return RADIO_TX_ERR;
   }
-  memcpy(socket_radio_buf, payload, payload_len);
-  buf_payload_len = payload_len;
+  pending_data = (void *) payload;
 
   return 0;
 }
 
 static int
-transmit(unsigned short transmit_len)
+transmit(unsigned short len)
 {
-  int sent = 0;
-  sent = send(sockfd, socket_radio_buf, buf_payload_len, 0);
-  if(sent < 0) {
-    LOG_ERR("send()");
-    return RADIO_TX_ERR;
+  if (sockfd >= 0 && pending_data != NULL) {
+    int sent = send(sockfd, pending_data, len, 0);
+    if (sent == len) {
+      return RADIO_TX_OK;
+    }
   }
-  buf_payload_len = 0;
-  return RADIO_TX_OK;
+  return RADIO_TX_ERR;
 }
 
 static int
@@ -108,16 +112,15 @@ static void
 handle_fd(fd_set *rset, fd_set *wset)
 {
   if(FD_ISSET(sockfd, rset)) {
-    int bytes = read(sockfd, socket_radio_buf, socket_radio_bufsz-1);
+    int bytes = read(sockfd, in_databuf, SOCKET_RADIO_BUFSIZE);
     if (bytes > 0) {
       LOG_DBG("Received %d bytes from socket radio\n", bytes);
-      socket_radio_buf[bytes] = 0;
-      buf_payload_len = bytes;
+      in_databuf[bytes] = 0;
       if (current_callback != NULL) {
-        current_callback(socket_radio_buf, buf_payload_len);
+        current_callback(in_databuf, bytes);
       } else {
         packetbuf_clear();
-        memcpy(packetbuf_dataptr(), socket_radio_buf, bytes);
+        memcpy(packetbuf_dataptr(), in_databuf, bytes);
         NETSTACK_MAC.input();
       }
     }
@@ -141,7 +144,7 @@ on(void)
         return 0;
     }
 
-    sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0) {
         LOG_ERR("socket()\n");
         return 0;
@@ -149,7 +152,7 @@ on(void)
 
     // memset(&radio_addr, 0, sizeof(radio_addr));
     radio_addr.sin_family = AF_INET;
-    radio_addr.sin_port = htons(radio_port);
+    radio_addr.sin_port = htons(6000);
     inet_pton(AF_INET, "127.0.0.1", &radio_addr.sin_addr);
 
     if ((r = connect(sockfd, (struct sockaddr *)&radio_addr, sizeof radio_addr)) < 0) {
@@ -157,7 +160,6 @@ on(void)
         return 0;
     }
 
-    send(sockfd, "test", 1, 0);
 
     LOG_INFO("Using port %d as socket radio source\n", radio_port);
     
