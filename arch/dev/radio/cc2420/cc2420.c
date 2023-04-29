@@ -156,6 +156,8 @@ static uint8_t volatile poll_mode = 0;
 /* Do we perform a CCA before sending? */
 static uint8_t send_on_cca = WITH_SEND_CCA;
 
+static cc2420_input_callback current_callback = NULL;
+
 static radio_result_t
 get_value(radio_param_t param, radio_value_t *value)
 {
@@ -904,7 +906,11 @@ PROCESS_THREAD(cc2420_process, ev, data)
 
     packetbuf_set_datalen(len);
 
-    NETSTACK_MAC.input();
+    if (current_callback == NULL) {
+      NETSTACK_MAC.input();
+    } else {
+      current_callback(packetbuf_dataptr(), len);
+    }
   }
 
   PROCESS_END();
@@ -1190,5 +1196,11 @@ set_test_mode(uint8_t enable, uint8_t modulated)
       on();
     }
   }
+}
+/*---------------------------------------------------------------------------*/
+void 
+cc2420_set_input_callback(cc2420_input_callback callback)
+{
+  current_callback = callback;
 }
 /*---------------------------------------------------------------------------*/

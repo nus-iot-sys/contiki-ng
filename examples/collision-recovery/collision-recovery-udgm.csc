@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <simconf>
   <simulation>
-    <title>nullnet-broadcast</title>
+    <title>collision recovery UDGM</title>
+    <speedlimit>1.0</speedlimit>
     <randomseed>123456</randomseed>
     <motedelay_us>1000000</motedelay_us>
     <radiomedium>
@@ -16,9 +17,9 @@
     </events>
     <motetype>
       org.contikios.cooja.mspmote.SkyMoteType
-      <identifier>sky933092847</identifier>
+      <identifier>sky323458930</identifier>
       <description>Sky Mote Type #1</description>
-      <firmware>[CONFIG_DIR]/nullnet-broadcast.sky</firmware>
+      <firmware>[CONFIG_DIR]/collision-recovery.sky</firmware>
       <moteinterface>org.contikios.cooja.interfaces.Position</moteinterface>
       <moteinterface>org.contikios.cooja.interfaces.RimeAddress</moteinterface>
       <moteinterface>org.contikios.cooja.interfaces.IPAddress</moteinterface>
@@ -38,41 +39,28 @@
     <mote>
       <interface_config>
         org.contikios.cooja.interfaces.Position
-        <x>35.64248486383174</x>
-        <y>81.08144909966097</y>
+        <x>35.96717185671304</x>
+        <y>-1.4107463410153107</y>
         <z>0.0</z>
       </interface_config>
       <interface_config>
         org.contikios.cooja.mspmote.interfaces.MspMoteID
         <id>1</id>
       </interface_config>
-      <motetype_identifier>sky933092847</motetype_identifier>
+      <motetype_identifier>sky323458930</motetype_identifier>
     </mote>
     <mote>
       <interface_config>
         org.contikios.cooja.interfaces.Position
-        <x>21.631600827187725</x>
-        <y>81.08964789677626</y>
+        <x>47.46140031650833</x>
+        <y>12.378016781569979</y>
         <z>0.0</z>
       </interface_config>
       <interface_config>
         org.contikios.cooja.mspmote.interfaces.MspMoteID
         <id>2</id>
       </interface_config>
-      <motetype_identifier>sky933092847</motetype_identifier>
-    </mote>
-    <mote>
-      <interface_config>
-        org.contikios.cooja.interfaces.Position
-        <x>30.25593084772853</x>
-        <y>90.23879727193736</y>
-        <z>0.0</z>
-      </interface_config>
-      <interface_config>
-        org.contikios.cooja.mspmote.interfaces.MspMoteID
-        <id>3</id>
-      </interface_config>
-      <motetype_identifier>sky933092847</motetype_identifier>
+      <motetype_identifier>sky323458930</motetype_identifier>
     </mote>
   </simulation>
   <plugin>
@@ -83,7 +71,7 @@
       <skin>org.contikios.cooja.plugins.skins.GridVisualizerSkin</skin>
       <skin>org.contikios.cooja.plugins.skins.TrafficVisualizerSkin</skin>
       <skin>org.contikios.cooja.plugins.skins.UDGMVisualizerSkin</skin>
-      <viewport>7.760200744143468 0.0 0.0 7.760200744143468 -150.22920119979298 -502.2715638455974</viewport>
+      <viewport>3.6220132561477136 0.0 0.0 3.6220132561477136 61.48704693251449 125.83701467549207</viewport>
     </plugin_config>
     <width>400</width>
     <z>0</z>
@@ -99,8 +87,8 @@
       <coloring />
     </plugin_config>
     <width>1262</width>
-    <z>3</z>
-    <height>240</height>
+    <z>2</z>
+    <height>459</height>
     <location_x>400</location_x>
     <location_y>160</location_y>
   </plugin>
@@ -109,15 +97,14 @@
     <plugin_config>
       <mote>0</mote>
       <mote>1</mote>
-      <mote>2</mote>
       <showRadioRXTX />
       <showRadioHW />
       <showLEDs />
-      <zoomfactor>500.0</zoomfactor>
+      <zoomfactor>10.0</zoomfactor>
     </plugin_config>
     <width>1662</width>
-    <z>2</z>
-    <height>166</height>
+    <z>1</z>
+    <height>165</height>
     <location_x>0</location_x>
     <location_y>793</location_y>
   </plugin>
@@ -128,7 +115,7 @@
       <decorations>true</decorations>
     </plugin_config>
     <width>982</width>
-    <z>1</z>
+    <z>3</z>
     <height>160</height>
     <location_x>680</location_x>
     <location_y>0</location_y>

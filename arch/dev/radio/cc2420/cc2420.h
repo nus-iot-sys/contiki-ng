@@ -111,4 +111,17 @@ void cc2420_set_cca_threshold(int value);
 
 extern const struct aes_128_driver cc2420_aes_128_driver;
 
+/**
+ * Function prototype for cc2420 input callback to work 
+ * without the Contiki network stack.
+ */
+typedef void (* cc2420_input_callback)(const void *data, uint16_t len);
+
+/**
+ * Set input callback for cc2420
+ * \param callback The input callback
+ */
+void cc2420_set_input_callback(cc2420_input_callback callback);
+
+
 #endif /* CC2420_H_ */
