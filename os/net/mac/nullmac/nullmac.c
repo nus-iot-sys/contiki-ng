@@ -48,23 +48,25 @@
 static void
 send_packet(mac_callback_t sent, void *ptr)
 {
+  NETSTACK_RADIO.send(packetbuf_dataptr(), packetbuf_datalen());
 }
 /*---------------------------------------------------------------------------*/
 static void
 packet_input(void)
 {
+  NETSTACK_NETWORK.input(); 
 }
 /*---------------------------------------------------------------------------*/
 static int
 on(void)
 {
-  return 0;
+  return NETSTACK_RADIO.on();
 }
 /*---------------------------------------------------------------------------*/
 static int
 off(void)
 {
-  return 0;
+  return NETSTACK_RADIO.off();
 }
 /*---------------------------------------------------------------------------*/
 static int
@@ -76,6 +78,8 @@ max_payload(void)
 static void
 init(void)
 {
+  // we show turn on the radio here, but for some reason it gets turned off later
+  // so turn it on from the application 
 }
 /*---------------------------------------------------------------------------*/
 const struct mac_driver nullmac_driver = {
