@@ -1,0 +1,10 @@
+CONTIKI_PROJECT = test-cooja
+all: $(CONTIKI_PROJECT)
+
+TARGET ?= sky
+
+CONTIKI = ../..
+
+MAKE_MAC = MAKE_MAC_NULLMAC
+MAKE_NET = MAKE_NET_NULLNET
+include $(CONTIKI)/Makefile.include

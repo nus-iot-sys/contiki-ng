@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simconf>
+  <simulation>
+    <title>Test Cooja</title>
+    <randomseed>123456</randomseed>
+    <motedelay_us>1000000</motedelay_us>
+    <radiomedium>
+      org.contikios.cooja.radiomediums.DirectedGraphMedium
+      <edge><source>1</source><dest>org.contikios.cooja.radiomediums.DGRMDestinationRadio<radio>1</radio><ratio>1.0</ratio><signal>-10.0</signal><lqi>105</lqi><delay>0</delay><channel>-1</channel></dest></edge><edge><source>1</source><dest>org.contikios.cooja.radiomediums.DGRMDestinationRadio<radio>2</radio><ratio>1.0</ratio><signal>-10.0</signal><lqi>105</lqi><delay>0</delay><channel>-1</channel></dest></edge><edge><source>1</source><dest>org.contikios.cooja.radiomediums.DGRMDestinationRadio<radio>3</radio><ratio>1.0</ratio><signal>-10.0</signal><lqi>105</lqi><delay>0</delay><channel>-1</channel></dest></edge><edge><source>2</source><dest>org.contikios.cooja.radiomediums.DGRMDestinationRadio<radio>1</radio><ratio>1.0</ratio><signal>-10.0</signal><lqi>105</lqi><delay>0</delay><channel>-1</channel></dest></edge><edge><source>2</source><dest>org.contikios.cooja.radiomediums.DGRMDestinationRadio<radio>2</radio><ratio>1.0</ratio><signal>-10.0</signal><lqi>105</lqi><delay>0</delay><channel>-1</channel></dest></edge><edge><source>2</source><dest>org.contikios.cooja.radiomediums.DGRMDestinationRadio<radio>3</radio><ratio>1.0</ratio><signal>-10.0</signal><lqi>105</lqi><delay>0</delay><channel>-1</channel></dest></edge><edge><source>3</source><dest>org.contikios.cooja.radiomediums.DGRMDestinationRadio<radio>1</radio><ratio>1.0</ratio><signal>-10.0</signal><lqi>105</lqi><delay>0</delay><channel>-1</channel></dest></edge><edge><source>3</source><dest>org.contikios.cooja.radiomediums.DGRMDestinationRadio<radio>2</radio><ratio>1.0</ratio><signal>-10.0</signal><lqi>105</lqi><delay>0</delay><channel>-1</channel></dest></edge><edge><source>3</source><dest>org.contikios.cooja.radiomediums.DGRMDestinationRadio<radio>3</radio><ratio>1.0</ratio><signal>-10.0</signal><lqi>105</lqi><delay>0</delay><channel>-1</channel></dest></edge>
+    </radiomedium>
+    <events>
+      <logoutput>40000</logoutput>
+    </events>
+    <motetype>
+      org.contikios.cooja.mspmote.SkyMoteType
+      <identifier>sky576610224</identifier>
+      <description>Sky Mote Type #1</description>
+      <firmware>[CONFIG_DIR]/test-cooja.sky</firmware>
+      <moteinterface>org.contikios.cooja.interfaces.Position</moteinterface>
+      <moteinterface>org.contikios.cooja.interfaces.RimeAddress</moteinterface>
+      <moteinterface>org.contikios.cooja.interfaces.IPAddress</moteinterface>
+      <moteinterface>org.contikios.cooja.interfaces.Mote2MoteRelations</moteinterface>
+      <moteinterface>org.contikios.cooja.interfaces.MoteAttributes</moteinterface>
+      <moteinterface>org.contikios.cooja.mspmote.interfaces.MspClock</moteinterface>
+      <moteinterface>org.contikios.cooja.mspmote.interfaces.MspMoteID</moteinterface>
+      <moteinterface>org.contikios.cooja.mspmote.interfaces.SkyButton</moteinterface>
+      <moteinterface>org.contikios.cooja.mspmote.interfaces.SkyFlash</moteinterface>
+      <moteinterface>org.contikios.cooja.mspmote.interfaces.SkyCoffeeFilesystem</moteinterface>
+      <moteinterface>org.contikios.cooja.mspmote.interfaces.Msp802154Radio</moteinterface>
+      <moteinterface>org.contikios.cooja.mspmote.interfaces.MspSerial</moteinterface>
+      <moteinterface>org.contikios.cooja.mspmote.interfaces.SkyLED</moteinterface>
+      <moteinterface>org.contikios.cooja.mspmote.interfaces.MspDebugOutput</moteinterface>
+      <moteinterface>org.contikios.cooja.mspmote.interfaces.SkyTemperature</moteinterface>
+    </motetype>
+    <mote>
+      <interface_config>
+        org.contikios.cooja.interfaces.Position
+        <x>84.80299397864977</x>
+        <y>56.514818956637214</y>
+        <z>0.0</z>
+      </interface_config>
+      <interface_config>
+        org.contikios.cooja.mspmote.interfaces.MspMoteID
+        <id>1</id>
+      </interface_config>
+      <motetype_identifier>sky576610224</motetype_identifier>
+    </mote>
+    <mote>
+      <interface_config>
+        org.contikios.cooja.interfaces.Position
+        <x>90.51131607204516</x>
+        <y>30.560793245852082</y>
+        <z>0.0</z>
+      </interface_config>
+      <interface_config>
+        org.contikios.cooja.mspmote.interfaces.MspMoteID
+        <id>2</id>
+      </interface_config>
+      <motetype_identifier>sky576610224</motetype_identifier>
+    </mote>
+    <mote>
+      <interface_config>
+        org.contikios.cooja.interfaces.Position
+        <x>68.09689568355527</x>
+        <y>38.74042276364801</y>
+        <z>0.0</z>
+      </interface_config>
+      <interface_config>
+        org.contikios.cooja.mspmote.interfaces.MspMoteID
+        <id>3</id>
+      </interface_config>
+      <motetype_identifier>sky576610224</motetype_identifier>
+    </mote>
+  </simulation>
+  <plugin>
+    org.contikios.cooja.plugins.Visualizer
+    <plugin_config>
+      <moterelations>true</moterelations>
+      <skin>org.contikios.cooja.plugins.skins.IDVisualizerSkin</skin>
+      <skin>org.contikios.cooja.plugins.skins.GridVisualizerSkin</skin>
+      <skin>org.contikios.cooja.plugins.skins.DGRMVisualizerSkin</skin>
+      <skin>org.contikios.cooja.plugins.skins.TrafficVisualizerSkin</skin>
+      <viewport>4.951920625988678 0.0 0.0 4.951920625988678 -107.57405866483309 -53.84819810410879</viewport>
+    </plugin_config>
+    <width>400</width>
+    <z>0</z>
+    <height>400</height>
+    <location_x>1</location_x>
+    <location_y>1</location_y>
+  </plugin>
+  <plugin>
+    org.contikios.cooja.plugins.LogListener
+    <plugin_config>
+      <filter />
+      <formatted_time />
+      <coloring />
+    </plugin_config>
+    <width>1320</width>
+    <z>3</z>
+    <height>240</height>
+    <location_x>400</location_x>
+    <location_y>160</location_y>
+  </plugin>
+  <plugin>
+    org.contikios.cooja.plugins.TimeLine
+    <plugin_config>
+      <mote>0</mote>
+      <mote>1</mote>
+      <mote>2</mote>
+      <showRadioRXTX />
+      <showRadioHW />
+      <showLEDs />
+      <zoomfactor>500.0</zoomfactor>
+    </plugin_config>
+    <width>1720</width>
+    <z>2</z>
+    <height>166</height>
+    <location_x>0</location_x>
+    <location_y>788</location_y>
+  </plugin>
+  <plugin>
+    org.contikios.cooja.plugins.Notes
+    <plugin_config>
+      <notes>Enter notes here</notes>
+      <decorations>true</decorations>
+    </plugin_config>
+    <width>1040</width>
+    <z>1</z>
+    <height>160</height>
+    <location_x>680</location_x>
+    <location_y>0</location_y>
+  </plugin>
+</simconf>
+
